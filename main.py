@@ -5,7 +5,10 @@ import logging
 # Logging-Setup (Standard-Out)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-API_URL = os.getenv("API_URL", "https://jsonplaceholder.typicode.com/todos")
+API_URL = os.getenv("API_URL")
+API_TIMEOUT = int(os.getenv("API_TIMEOUT"))
+WARNING_THRESHOLD = float(os.getenv("WARNING_THRESHOLD"))
+
 
 def run_healthcheck():
     """
