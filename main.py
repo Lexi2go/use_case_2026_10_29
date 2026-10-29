@@ -16,6 +16,7 @@ API_URL = os.getenv("API_URL")
 API_TIMEOUT = int(os.getenv("API_TIMEOUT"))
 WARNING_THRESHOLD = float(os.getenv("WARNING_THRESHOLD"))
 
+
 def fetch_todos(url: str, timeout: int = 5) -> List[Dict[str, Any]]:
     """Calls API and returns a list of todos."""
     response = requests.get(url, timeout=timeout)
@@ -26,6 +27,7 @@ def fetch_todos(url: str, timeout: int = 5) -> List[Dict[str, Any]]:
         raise ValueError("Invalid API response format: expected a list of tasks.")
 
     return data
+
 
 def evaluate_todos(
     todos: List[Dict[str, Any]], threshold: float = 0.60
@@ -63,6 +65,7 @@ def evaluate_todos(
             "open_percentage": round(open_ratio * 100, 2),
         },
     }
+
 
 def run_healthcheck():
     """
@@ -124,6 +127,7 @@ def run_healthcheck():
             )
         )
         sys.exit(1)
+
 
 if __name__ == "__main__":
     run_healthcheck()
