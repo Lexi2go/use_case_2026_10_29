@@ -5,6 +5,9 @@ from typing import Any, Dict, List
 import requests
 import json
 from datetime import datetime, timezone
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Logging-Setup (Standard-Out)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
