@@ -12,15 +12,22 @@ Ein interner Service (z. B. eine API für Infrastruktur-Status) soll automatisie
 
 ### 1. Automation & Data Fetching (Skript / Service)
 
-* **Skripterstellung:** Erstelle eine kleine Automatisierung (z. B. in Python via `main.py`).
+> 💡 **Freie Wahl der Skriptsprache:** Du kannst diese Aufgabe in der Programmier- bzw. Skriptsprache deiner Wahl lösen! Im Repository findest du Vorlagen für:
+> * **Python:** `main.py`
+> * **Bash / Shell:** `main.sh`
+> * **PowerShell:** `main.ps1`
+> 
+> Nutze einfach die Vorlage/Sprache, mit der du am besten vertraut bist (oder erstelle eine eigene).
+
+* **Skripterstellung:** Implementiere die Automatisierungslogik in deiner gewählten Sprache (z. B. `main.py`, `main.sh` oder `main.ps1`).
 * **API-Abruf:** Rufe Daten von einer REST-API ab (z. B. `https://jsonplaceholder.typicode.com/todos` oder eine Mock-API) inkl. robustem Error Handling / Timeout-Management.
 * **Transformation & Aggregation:** Filtere und transformiere die Daten (z. B. Identifikation von fehlerhaften/unerledigten States, Berechnung von Quoten) und ermittle einen Status (`HEALTHY` vs. `WARNING`).
 * **Output:** Erstelle einen strukturierten JSON-Report oder Metrics-Payload über `stdout` / Datei.
 
 ### 2. Containerisierung & CI/CD-Workflow
 
-* **Dockerfile:** Schreibe ein kompaktes und sicheres Dockerfile für deinen Service/Skript (schlankes Base-Image, Non-Root-User, Best Practices).
-* **GitHub Actions Pipeline:** Erstelle/erweitere die Workflow-Datei (`.github/workflows/main.yml` bzw. `main.yaml`), die bei einem `push` auf den `main`-Branch automatisch:
+* **Dockerfile:** Schreibe ein kompaktes und sicheres Dockerfile für deinen Service/Skript passend zu deiner gewählten Sprache/Runtime (schlankes Base-Image, Non-Root-User, Best Practices).
+* **GitHub Actions Pipeline:** Erstelle/erweitere die Workflow-Datei (`.github/workflows/main.yml` bzw. `.github/workflow/main.yaml`), die bei einem `push` auf den `main`-Branch automatisch:
   * Den Code prüft und testet (Syntax-Check / Unit Test / Linter).
   * Das Docker-Image baut.
   * Einen simulierten Deployment-Step oder eine Benachrichtigung (z. B. Webhook/Status-Echo) triggert.
@@ -43,8 +50,10 @@ Beantworte kurz die folgenden konzeptionellen Fragen (in der README oder als sep
 │   └── workflow/
 │       └── main.yaml        # GitHub Actions CI/CD Pipeline
 ├── Dockerfile               # Container-Definition für den Health-Check Service
+├── main.ps1                 # PowerShell Automation- & Health-Check Skript
 ├── main.py                  # Python Automation- & Health-Check Skript
-├── requirements.txt         # Python-Abhängigkeiten
+├── main.sh                  # Bash/Shell Automation- & Health-Check Skript
+├── requirements.txt         # Python-Abhängigkeiten (bei Python-Nutzung)
 └── README.md                # Dokumentation & Aufgabenstellung
 ```
 
@@ -54,11 +63,17 @@ Beantworte kurz die folgenden konzeptionellen Fragen (in der README oder als sep
 
 ### Voraussetzungen
 
-* Python 3.11+
-* Docker (optional für Container-Test)
+Je nach gewählter Skriptsprache:
+* **Python:** Python 3.11+
+* **Bash:** Bash, `curl`, `jq`
+* **PowerShell:** PowerShell (`pwsh`) 7+
+* **Docker:** Optional für lokale Container-Tests
 
 ### Lokale Ausführung
 
+Wähle die passende Ausführung für deine gewählte Skriptsprache:
+
+#### Option A: Python (`main.py`)
 ```bash
 # 1. Virtuelle Umgebung erstellen & Abhängigkeiten installieren
 python3 -m venv .venv
@@ -69,7 +84,20 @@ pip install -r requirements.txt
 python main.py
 ```
 
+#### Option B: Bash (`main.sh`)
+```bash
+chmod +x main.sh
+./main.sh
+```
+
+#### Option C: PowerShell (`main.ps1`)
+```powershell
+pwsh ./main.ps1
+```
+
 ### Docker Ausführung
+
+*(Passe das `Dockerfile` ggf. an deine gewählte Sprache / Runtime an)*
 
 ```bash
 # Image bauen
