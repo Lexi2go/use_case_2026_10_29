@@ -1,25 +1,32 @@
-import os
-import sys
-import logging
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Logging-Setup (Standard-Out)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+# Logging-Hilfsfunktion (Standard-Out mit Zeitstempel & Loglevel)
+log_info() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [INFO] $1"
+}
 
-API_URL = os.getenv("API_URL", "https://jsonplaceholder.typicode.com/todos")
+log_error() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [ERROR] $1" >&2
+}
 
-def run_healthcheck():
-    """
+# API-URL mit Default-Fallback via Umgebungsvariable
+API_URL="${API_URL:-https://jsonplaceholder.typicode.com/todos}"
+
+run_healthcheck() {
+    : '
     TODO für Bewerber:
-    1. REST-API Daten abrufen (API_URL) & Fehler abfangen
-    2. Offene Tasks (completed: false) zählen und Quote berechnen
+    1. REST-API Daten abrufen (API_URL) & Fehler abfangen (z. B. via curl)
+    2. Offene Tasks (completed: false) zählen und Quote berechnen (z. B. via jq / bc / awk)
     3. Status ermitteln (>= 60% offen -> "WARNING", sonst "HEALTHY")
     4. Ergebnis als strukturiertes JSON ausgeben
-    """
-    logging.info(f"Starte Healthcheck für: {API_URL}")
-    
-    # --- DEIN CODE HIER ---
-    
-    pass
+    '
+    log_info "Starte Healthcheck für: ${API_URL}"
 
-if __name__ == "__main__":
-    run_healthcheck()
+    # --- DEIN CODE HIER ---
+
+    return 0
+}
+
+# Einstiegspunkt
+run_healthcheck
