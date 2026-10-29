@@ -72,7 +72,7 @@ def run_healthcheck():
     3. Status ermitteln (>= 60% offen -> "WARNING", sonst "HEALTHY")
     4. Ergebnis als strukturiertes JSON ausgeben
     """
-    logging.info(f"Starte Healthcheck für: {API_URL}")
+    logging.info(f"Start health check for: {API_URL}")
     timestamp = datetime.now(timezone.utc).isoformat()
 
     try:
